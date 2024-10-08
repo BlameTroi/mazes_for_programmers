@@ -1,8 +1,8 @@
 # Makefile shell for Mazes for Programmers
 
 CC=clang
-# CFLAGS=-Wall -O3 -std=c99
-CFLAGS=-fsanitize=address -Wall -g3 -O0 -std=c99
+# CFLAGS=-Wall -O3 -std=c18
+CFLAGS=-fsanitize=address -Wall -g3 -O0 -std=c18
 # LDFLAGS=-lm
 LDFLAGS=
 

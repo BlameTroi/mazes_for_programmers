@@ -10,7 +10,7 @@
 
 #include "cell.h"
 
-#define GRID_TAG "CELL"
+#define GRID_TAG "GRID"
 #define GRID_TAG_LEN 4
 #define ASSERT_GRID(p) assert((p) && memcmp((p), GRID_TAG, GRID_TAG_LEN) == 0)
 #define ASSERT_GRID_OR_NULL(p) assert((p) == NULL || memcmp((p), GRID_TAG, GRID_TAG_LEN) == 0)
