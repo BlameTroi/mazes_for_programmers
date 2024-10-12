@@ -24,13 +24,17 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+#include "sidewinder.h"
+
 #include "cell.h"
 #include "grid.h"
-#include "txbrand.h"
 
+#define TXBRAND_IMPLEMENTATION
+#include "txbrand.h"
+
 grid *
 sidewinder_on(grid *grid) {
-	ASSERT_GRID(grid);
+	ASSERT_GRID(grid, "sidewinder_on not a grid");
 	cell **run = malloc((grid->rows * grid->cols + 1) * sizeof(cell));
 	for (int row = 0; row < grid->rows; row++) {
 		memset(run, 0, (grid->rows * grid->cols + 1) * sizeof(cell));
@@ -41,9 +45,8 @@ sidewinder_on(grid *grid) {
 			cells += 1;
 			bool at_eastern_boundary = curr->east == NULL;
 			bool at_northern_boundary = curr->north == NULL;
-			bool should_close_out =
-				at_eastern_boundary ||
-				(!at_northern_boundary && random_between(0, 1) == 0);
+			bool should_close_out = at_eastern_boundary ||
+			(!at_northern_boundary && random_between(0, 1) == 0);
 			if (should_close_out) {
 				cell *member = run[random_between(0, cells-1)];
 				link_cell(member, member->north, true);

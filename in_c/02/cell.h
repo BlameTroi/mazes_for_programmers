@@ -3,26 +3,22 @@
 #ifndef CELL_H
 #define CELL_H
 
-#include <assert.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <string.h>
+
+#include "txbabort_if.h"
 
 /*
  * a cell in a maze grid
  */
 
-/* these macros (for various structures) validate pointer references. there are times
-   that a null pointer might be valid, hence the assert-or-null variation.
-
-   for reasons i don't understand, i can't get any variation of sizeof(something that
-   gets the size of the tag field) to work, some error with an allegedly missing
-   close paren. hard coding the length works. */
-
 #define CELL_TAG "CELL"
 #define CELL_TAG_LEN 4
-#define ASSERT_CELL(p) assert((p) && memcmp((p), CELL_TAG, CELL_TAG_LEN) == 0)
-#define ASSERT_CELL_OR_NULL(p) assert((p) == NULL || memcmp((p), CELL_TAG, CELL_TAG_LEN) == 0)
+#define ASSERT_CELL(p, m) \
+	abort_if(!(p) || memcmp((p), CELL_TAG, CELL_TAG_LEN) != 0, (m))
+#define ASSERT_CELL_OR_NULL(p, m) \
+	abort_if((p) && memcmp((p), CELL_TAG, CELL_TAG_LEN) != 0, (m))
 
 typedef struct cell cell;
 struct cell {

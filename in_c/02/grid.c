@@ -1,6 +1,6 @@
 /* grid.c -- provides a basic grid 'class' for mazes */
 
-#include <assert.h>
+#include "txbabort_if.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -15,7 +15,6 @@
 #define TXBSB_IMPLEMENTATION
 #include "txbsb.h"
 
-#define TXBRAND_IMPLEMENTATION
 #include "txbrand.h"
 
 /*
@@ -29,9 +28,9 @@ index_of_cell(
 	int row,
 	int col
 ) {
-	ASSERT_GRID(self);
-	assert(row >= 0 && row < self->rows);
-	assert(col >= 0 && col < self->cols);
+	ASSERT_GRID(self, "index_of_cell not a grid");
+	abort_if(row < 0 || row >= self->rows, "index_of_cell out of bounds row");
+	abort_if(col < 0 || col >= self->cols, "index_of_cell out of bounds col");
 	return row * self->cols + col;
 }
 
@@ -82,7 +81,7 @@ create_grid(
 
 grid *
 destroy_grid(grid *self) {
-	ASSERT_GRID(self);
+	ASSERT_GRID(self, "destroy_grid not a grid");
 	for (int i = 0; i < self->num_cells; i++)
 		destroy_cell(self->cells[i]);
 	memset(self, 253, sizeof(grid));
@@ -111,7 +110,7 @@ grid_to_string(
 			char *east_boundary = linked_cell(curr, curr->east) ? "    " : "   |";
 			sb_puts(top, east_boundary);
 			char *south_boundary = linked_cell(curr,
-				curr->south) ? "   +" : "---+";
+					curr->south) ? "   +" : "---+";
 			sb_puts(bottom, south_boundary);
 		}
 		sb_puts(sb, sb_to_string(top));
@@ -134,7 +133,7 @@ grid_to_string(
 
 cell *
 cell_in_grid_at(grid *self, int row, int col) {
-	ASSERT_GRID(self);
+	ASSERT_GRID(self, "cell_in_grid_at not a grid");
 	if (row < 0 || row >= self->rows || col < 0 || col >= self->cols)
 		return NULL;
 	return self->cells[index_of_cell(self, row, col)];
@@ -146,7 +145,7 @@ cell_in_grid_at(grid *self, int row, int col) {
 
 cell *
 random_cell_in_grid(grid *self) {
-	ASSERT_GRID(self);
+	ASSERT_GRID(self, "random_cell_in_grid not a grid");
 	return self->cells[random_between(0, self->num_cells)];
 }
 

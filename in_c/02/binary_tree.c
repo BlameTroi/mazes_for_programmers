@@ -11,11 +11,16 @@
 
 #include "cell.h"
 #include "grid.h"
-#include "txbrand.h"
 
+#include "binary_tree.h"
+
+#include "txbrand.h"
+
 grid *
-binary_tree_on(grid *grid) {
-	ASSERT_GRID(grid);
+binary_tree_on(
+	grid *grid
+) {
+	ASSERT_GRID(grid, "binary_tree_on not a grid");
 	/* need an interator, but for now ... */
 	for (int i = 0; i < grid->num_cells; i++) {
 		cell *neighbors[3] = {NULL, NULL, NULL};
