@@ -37,7 +37,7 @@ struct cell {
  */
 
 cell *
-create_cell(
+cell_create(
 	int row,
 	int col
 );
@@ -47,7 +47,7 @@ create_cell(
  */
 
 cell *
-link_cell(
+cell_link(
 	cell *self,
 	cell *other,
 	bool both
@@ -58,7 +58,7 @@ link_cell(
  */
 
 cell *
-unlink_cell(
+cell_unlink(
 	cell *self,
 	cell *other,
 	bool both
@@ -69,7 +69,7 @@ unlink_cell(
  */
 
 bool
-linked_cell(
+cell_linked_p(
 	cell *self,
 	cell *other
 );
@@ -79,7 +79,7 @@ linked_cell(
  */
 
 cell *
-destroy_cell(
+cell_destroy(
 	cell *self
 );
 

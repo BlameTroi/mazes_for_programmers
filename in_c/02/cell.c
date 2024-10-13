@@ -19,7 +19,7 @@
  */
 
 cell *
-create_cell(
+cell_create(
 	int row,
 	int col
 ) {
@@ -46,7 +46,7 @@ create_cell(
  */
 
 cell *
-link_cell(
+cell_link(
 	cell *self,
 	cell *other,
 	bool both
@@ -64,7 +64,7 @@ link_cell(
 	}
 	self->links[p] = other;
 	if (both)
-		link_cell(other, self, false);
+		cell_link(other, self, false);
 	return self;
 }
 
@@ -73,7 +73,7 @@ link_cell(
  */
 
 bool
-linked_cell(
+cell_linked_p(
 	cell *self,
 	cell *other
 ) {
@@ -94,7 +94,7 @@ linked_cell(
  */
 
 cell *
-unlink_cell(
+cell_unlink(
 	cell *self,
 	cell *other,
 	bool both
@@ -111,7 +111,7 @@ unlink_cell(
 	abort_if(p == -1, "unlink_cell cell has no links");
 	self->links[p] = NULL;
 	if (both)
-		unlink_cell(other, self, false);
+		cell_unlink(other, self, false);
 	return self;
 }
 
@@ -122,7 +122,7 @@ unlink_cell(
  */
 
 cell **
-get_cell_neighbors(
+cell_cell_neighbors(
 	cell *self
 ) {
 	ASSERT_CELL(self, "get_cell_neighbors not a cell");
@@ -154,13 +154,13 @@ get_cell_neighbors(
  */
 
 cell *
-destroy_cell(
+cell_destroy(
 	cell *self
 ) {
 	ASSERT_CELL(self, "destroy_cell not a cell");
 	for (int i = 0; i < 4; i++) {
 		if (self->links[i] != NULL) {
-			unlink_cell(self, self->links[i], true);
+			cell_unlink(self, self->links[i], true);
 			self->links[i] = NULL;
 		}
 	}

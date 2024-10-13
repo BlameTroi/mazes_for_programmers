@@ -35,7 +35,7 @@ binary_tree_on(
 		}
 		if (n != 0) {
 			int k = random_between(0, n-1);
-			link_cell(grid->cells[i], neighbors[k], true);
+			cell_link(grid->cells[i], neighbors[k], true);
 		}
 	}
 	return grid;

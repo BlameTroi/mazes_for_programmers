@@ -102,10 +102,10 @@ main(
 		return EXIT_FAILURE;
 
 	set_random_generator(gen);
-	grid *grid = create_grid(rows, cols);
+	grid *grid = grid_create(rows, cols);
 	binary_tree_on(grid);
 	printf("\n%s\n", grid_to_string(grid));
-	destroy_grid(grid);
+	grid_destroy(grid);
 
 	return EXIT_SUCCESS;
 }

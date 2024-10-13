@@ -33,7 +33,7 @@ struct grid {
  */
 
 grid *
-create_grid(
+grid_create(
 	int rows,
 	int cols
 );
@@ -43,7 +43,7 @@ create_grid(
  */
 
 grid *
-destroy_grid(
+grid_destroy(
 	grid *self
 );
 
@@ -52,7 +52,7 @@ destroy_grid(
  */
 
 cell *
-cell_in_grid_at(
+grid_cell_at(
 	grid *self,
 	int row,
 	int col
@@ -63,7 +63,7 @@ cell_in_grid_at(
  */
 
 cell *
-random_cell_in_grid(
+grid_random_cell(
 	grid *self
 );
 

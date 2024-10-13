@@ -39,7 +39,7 @@ index_of_cell(
  */
 
 grid *
-create_grid(
+grid_create(
 	int rows,
 	int cols
 ) {
@@ -58,7 +58,7 @@ create_grid(
 	/* create all the cells at first */
 	for (int row = 0; row < self->rows; row++) {
 		for (int col = 0; col < self->cols; col++)
-			self->cells[index_of_cell(self, row, col)] = create_cell(row, col);
+			self->cells[index_of_cell(self, row, col)] = cell_create(row, col);
 	}
 
 	/* assign neighbors */
@@ -66,10 +66,10 @@ create_grid(
 		cell *curr = self->cells[i];
 		int r = self->cells[i]->row;
 		int c = self->cells[i]->col;
-		curr->north = cell_in_grid_at(self, r-1, c);
-		curr->east = cell_in_grid_at(self, r, c+1);
-		curr->south = cell_in_grid_at(self, r+1, c);
-		curr->west = cell_in_grid_at(self, r, c-1);
+		curr->north = grid_cell_at(self, r-1, c);
+		curr->east = grid_cell_at(self, r, c+1);
+		curr->south = grid_cell_at(self, r+1, c);
+		curr->west = grid_cell_at(self, r, c-1);
 	}
 
 	return self;
@@ -80,10 +80,10 @@ create_grid(
  */
 
 grid *
-destroy_grid(grid *self) {
+grid_destroy(grid *self) {
 	ASSERT_GRID(self, "destroy_grid not a grid");
 	for (int i = 0; i < self->num_cells; i++)
-		destroy_cell(self->cells[i]);
+		cell_destroy(self->cells[i]);
 	memset(self, 253, sizeof(grid));
 	free(self);
 	return NULL;
@@ -106,10 +106,10 @@ grid_to_string(
 		sbcb *top = sb_create_string("|");
 		sbcb *bottom = sb_create_string("+");
 		for (int col = 0; col < self->cols; col++) {
-			cell *curr = cell_in_grid_at(self, row, col);
-			char *east_boundary = linked_cell(curr, curr->east) ? "    " : "   |";
+			cell *curr = grid_cell_at(self, row, col);
+			char *east_boundary = cell_linked_p(curr, curr->east) ? "    " : "   |";
 			sb_puts(top, east_boundary);
-			char *south_boundary = linked_cell(curr,
+			char *south_boundary = cell_linked_p(curr,
 					curr->south) ? "   +" : "---+";
 			sb_puts(bottom, south_boundary);
 		}
@@ -132,7 +132,7 @@ grid_to_string(
  */
 
 cell *
-cell_in_grid_at(grid *self, int row, int col) {
+grid_cell_at(grid *self, int row, int col) {
 	ASSERT_GRID(self, "cell_in_grid_at not a grid");
 	if (row < 0 || row >= self->rows || col < 0 || col >= self->cols)
 		return NULL;
@@ -144,7 +144,7 @@ cell_in_grid_at(grid *self, int row, int col) {
  */
 
 cell *
-random_cell_in_grid(grid *self) {
+grid_random_cell(grid *self) {
 	ASSERT_GRID(self, "random_cell_in_grid not a grid");
 	return self->cells[random_between(0, self->num_cells)];
 }

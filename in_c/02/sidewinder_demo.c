@@ -74,7 +74,7 @@ handle_arguments(
 	*rows = strtol(argv[1], &scan_row, 10);
 	*cols = strtol(argv[2], &scan_col, 10);
 	if (scan_row == argv[1] || scan_row[0] != '\0' ||
-		scan_col == argv[2] || scan_col[0] != '\0') {
+	scan_col == argv[2] || scan_col[0] != '\0') {
 		char errmsg[256];
 		snprintf(errmsg, 256, "arguments must be row and column counts, found '%s %s'",
 			argv[1], argv[2]);
@@ -98,10 +98,10 @@ main(
 		return EXIT_FAILURE;
 
 	set_random_generator(gen);
-	grid *grid = create_grid(rows, cols);
+	grid *grid = grid_create(rows, cols);
 	sidewinder_on(grid);
 	printf("\n%s\n", grid_to_string(grid));
-	destroy_grid(grid);
+	grid_destroy(grid);
 
 	return EXIT_SUCCESS;
 }

@@ -40,7 +40,7 @@ sidewinder_on(grid *grid) {
 		memset(run, 0, (grid->rows * grid->cols + 1) * sizeof(cell));
 		int cells = 0;
 		for (int col = 0; col < grid->cols; col++) {
-			cell *curr = cell_in_grid_at(grid, row, col);
+			cell *curr = grid_cell_at(grid, row, col);
 			run[cells] = curr;
 			cells += 1;
 			bool at_eastern_boundary = curr->east == NULL;
@@ -49,11 +49,11 @@ sidewinder_on(grid *grid) {
 			(!at_northern_boundary && random_between(0, 1) == 0);
 			if (should_close_out) {
 				cell *member = run[random_between(0, cells-1)];
-				link_cell(member, member->north, true);
+				cell_link(member, member->north, true);
 				memset(run, 0, (grid->rows * grid->cols + 1) * sizeof(cell));
 				cells = 0;
 			} else
-				link_cell(curr, curr->east, true);
+				cell_link(curr, curr->east, true);
 		}
 	}
 	free(run);
