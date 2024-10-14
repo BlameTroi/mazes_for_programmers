@@ -29,7 +29,6 @@
 #include "cell.h"
 #include "grid.h"
 
-#define TXBRAND_IMPLEMENTATION
 #include "txbrand.h"
 
 grid *

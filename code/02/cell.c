@@ -42,6 +42,10 @@ cell_create(
  * linked means the cells are connected, you can move from one to the
  * other.
  *
+ * if argument 'both' is true, the link is dispatched to the 'other'
+ * cell so that it reflects the linkage. this is cleaner than reaching
+ * into the other cell.
+ *
  * quietly returns if the other cell is already linked or is NULL.
  */
 
@@ -69,7 +73,8 @@ cell_link(
 }
 
 /*
- * is there an open path from one cell to the other?
+ * being linked means there is there an open path from one cell to the
+ * other.
  */
 
 bool
@@ -89,6 +94,9 @@ cell_linked_p(
 
 /*
  * unlink another cell from this cell in both cell's link lists.
+ *
+ * as with cell_link, if 'both' is true, dispatch the cell_unlink to
+ * the other cell to sever the link at both ends.
  *
  * it is an error to attempt to unlink a cell that is not linked.
  */
@@ -126,6 +134,8 @@ cell_cell_neighbors(
 	cell *self
 ) {
 	ASSERT_CELL(self, "get_cell_neighbors not a cell");
+	/* there are at present a maximum of 4 neighbors, so allocate
+	 * space for the maximum plus the null terminator. */
 	cell **list = malloc(sizeof(cell *) * 5);
 	memset(list, 0, sizeof(cell *) * 5);
 	int i = 0;
@@ -158,13 +168,12 @@ cell_destroy(
 	cell *self
 ) {
 	ASSERT_CELL(self, "destroy_cell not a cell");
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++)
 		if (self->links[i] != NULL) {
 			cell_unlink(self, self->links[i], true);
 			self->links[i] = NULL;
 		}
-	}
-	memset(self, 253, sizeof(cell));
+	memset(self, 253, sizeof(*self));
 	free(self);
 	return NULL;
 }

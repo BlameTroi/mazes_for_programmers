@@ -11,7 +11,6 @@
 
 // #include "txbabort_if.h"
 
-#define TXBRAND_IMPLEMENTATION
 #include "txbrand.h"
 
 #include "grid.h"

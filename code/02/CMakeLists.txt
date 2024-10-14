@@ -45,12 +45,14 @@ endif()
 add_executable(binary_tree_demo "binary_tree_demo.c"
   "binary_tree.c"
   "cell.c" "cell.h"
-  "grid.c" "grid.h")
+  "grid.c" "grid.h"
+  "needlibs.c")
 
 add_executable(sidewinder_demo "sidewinder_demo.c"
   "sidewinder.c"
   "cell.c" "cell.h"
-  "grid.c" "grid.h")
+  "grid.c" "grid.h"
+  "needlibs.c")
 
 target_include_directories(binary_tree_demo PUBLIC "~/.local/include")
 target_include_directories(sidewinder_demo PUBLIC "~/.local/include")

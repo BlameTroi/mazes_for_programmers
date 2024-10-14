@@ -23,6 +23,7 @@ binary_tree_on(
 	ASSERT_GRID(grid, "binary_tree_on not a grid");
 	/* need an interator, but for now ... */
 	for (int i = 0; i < grid->num_cells; i++) {
+		/* do i have neighbors to the north or east? */
 		cell *neighbors[3] = {NULL, NULL, NULL};
 		int n = 0;
 		if (grid->cells[i]->north != NULL) {
@@ -33,6 +34,7 @@ binary_tree_on(
 			neighbors[n] = grid->cells[i]->east;
 			n += 1;
 		}
+		/* if i had neighbors (1 or 2 of them) link to one at random. */
 		if (n != 0) {
 			int k = random_between(0, n-1);
 			cell_link(grid->cells[i], neighbors[k], true);

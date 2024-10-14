@@ -1,6 +1,5 @@
 /* grid.c -- provides a basic grid 'class' for mazes */
 
-#include "txbabort_if.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -9,12 +8,9 @@
 #include "cell.h"
 #include "grid.h"
 
-#define TXBMISC_IMPLEMENTATION
+#include "txbabort_if.h"
 #include "txbmisc.h"
-
-#define TXBSB_IMPLEMENTATION
 #include "txbsb.h"
-
 #include "txbrand.h"
 
 /*
@@ -43,8 +39,7 @@ grid_create(
 	int rows,
 	int cols
 ) {
-	if (rows < 1 || cols < 1)
-		return NULL;
+	abort_if(rows < 1 || cols < 1, "grid_create illegal row or column count");
 
 	grid *self = malloc(sizeof(grid));
 	memset(self, 0, sizeof(grid));
@@ -58,13 +53,14 @@ grid_create(
 	self->cells = malloc(self->num_cells *sizeof(cell *));
 	memset(self->cells, 0, self->num_cells *sizeof(cell *));
 
-	/* create all the cells at first */
+	/* create all the cells */
 	for (int row = 0; row < self->rows; row++) {
 		for (int col = 0; col < self->cols; col++)
 			self->cells[index_of_cell(self, row, col)] = cell_create(row, col);
 	}
 
-	/* assign neighbors */
+	/* assign neighbors. grid_cell_at will return a null for an
+	 * off grid row,col, simplifying the loop. */
 	for (int i = 0; i < self->num_cells; i++) {
 		cell *curr = self->cells[i];
 		int r = self->cells[i]->row;
@@ -83,10 +79,15 @@ grid_create(
  */
 
 grid *
-grid_destroy(grid *self) {
+grid_destroy(
+	grid *self
+) {
 	ASSERT_GRID(self, "destroy_grid not a grid");
-	for (int i = 0; i < self->num_cells; i++)
+	for (int i = 0; i < self->num_cells; i++) {
 		cell_destroy(self->cells[i]);
+		self->cells[i] = NULL;
+	}
+	free(self->cells);
 	memset(self, 253, sizeof(grid));
 	free(self);
 	return NULL;
@@ -131,11 +132,15 @@ grid_to_string(
 
 /*
  * return the cell at a location in the grid. if the location is
- * out of bounds, returns NULL.
+ * out of bounds, return NULL.
  */
 
 cell *
-grid_cell_at(grid *self, int row, int col) {
+grid_cell_at(
+	grid *self,
+	int row,
+	int col
+) {
 	ASSERT_GRID(self, "cell_in_grid_at not a grid");
 	if (row < 0 || row >= self->rows || col < 0 || col >= self->cols)
 		return NULL;
