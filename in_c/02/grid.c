@@ -43,6 +43,9 @@ grid_create(
 	int rows,
 	int cols
 ) {
+	if (rows < 1 || cols < 1)
+		return NULL;
+
 	grid *self = malloc(sizeof(grid));
 	memset(self, 0, sizeof(grid));
 	memcpy(self->tag, GRID_TAG, GRID_TAG_LEN);
