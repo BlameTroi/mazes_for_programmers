@@ -10,9 +10,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "txbabort_if.h"
-
 #include "cell.h"
+
+#include "txbabort_if.h"
 
 /*
  * create a new cell for position row, col in a grid.

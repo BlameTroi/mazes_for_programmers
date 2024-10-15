@@ -6,13 +6,16 @@
  * random number generator instead of rand().
  */
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "grid.h"
 #include "sidewinder.h"
-#include "txbrand.h"
 
+#include "txbrand.h"
+
 void
 usage(
 	int argc,

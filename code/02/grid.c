@@ -1,15 +1,12 @@
 /* grid.c -- provides a basic grid 'class' for mazes */
 
-#include <stdbool.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 
 #include "cell.h"
 #include "grid.h"
 
 #include "txbabort_if.h"
-#include "txbmisc.h"
 #include "txbsb.h"
 #include "txbrand.h"
 

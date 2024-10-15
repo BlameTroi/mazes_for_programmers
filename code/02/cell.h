@@ -4,7 +4,6 @@
 #define CELL_H
 
 #include <stdbool.h>
-#include <stddef.h>
 #include <string.h>
 
 #include "txbabort_if.h"

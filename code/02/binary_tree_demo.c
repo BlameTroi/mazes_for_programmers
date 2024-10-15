@@ -6,15 +6,15 @@
  * instead of rand().
  */
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-// #include "txbabort_if.h"
-
-#include "txbrand.h"
+#include <string.h>
 
 #include "grid.h"
 #include "binary_tree.h"
+
+#include "txbrand.h"
 
 void
 usage(
