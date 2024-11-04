@@ -103,7 +103,9 @@ main(
 	set_random_generator(gen);
 	grid *grid = grid_create(rows, cols);
 	sidewinder_on(grid);
-	printf("\n%s\n", grid_to_string(grid));
+	char *s = grid_to_string(grid);
+	printf("\n%s\n", s);
+	free(s);
 	grid_destroy(grid);
 
 	return EXIT_SUCCESS;

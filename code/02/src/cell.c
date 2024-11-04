@@ -12,7 +12,7 @@
 
 #include "cell.h"
 
-#include "txbabort_if.h"
+#include "txbabort.h"
 
 /*
  * create a new cell for position row, col in a grid.
@@ -116,7 +116,7 @@ cell_unlink(
 			break;
 		}
 	}
-	abort_if(p == -1, "unlink_cell cell has no links");
+	abort_if(p == -1, "unlink_cell cell not linked");
 	self->links[p] = NULL;
 	if (both)
 		cell_unlink(other, self, false);
@@ -130,10 +130,10 @@ cell_unlink(
  */
 
 cell **
-cell_cell_neighbors(
+cell_neighbors(
 	cell *self
 ) {
-	ASSERT_CELL(self, "get_cell_neighbors not a cell");
+	ASSERT_CELL(self, "cell_neighbors not a cell");
 	/* there are at present a maximum of 4 neighbors, so allocate
 	 * space for the maximum plus the null terminator. */
 	cell **list = malloc(sizeof(cell *) * 5);

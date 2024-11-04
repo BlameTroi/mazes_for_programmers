@@ -4,9 +4,8 @@
 #define CELL_H
 
 #include <stdbool.h>
-#include <string.h>
 
-#include "txbabort_if.h"
+#include "txbabort.h"
 
 /*
  * a cell in a maze grid

@@ -3,9 +3,7 @@
 #ifndef GRID_H
 #define GRID_H
 
-#include <string.h>
-
-#include "txbabort_if.h"
+#include "txbabort.h"
 
 #include "cell.h"
 
@@ -69,7 +67,7 @@ grid_random_cell(
  * string representation of the grid.
  */
 
-const char *
+char *
 grid_to_string(
 	grid *self
 );

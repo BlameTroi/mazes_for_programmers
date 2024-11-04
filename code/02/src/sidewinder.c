@@ -25,13 +25,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "sidewinder.h"
-
 #include "cell.h"
 #include "grid.h"
 
+#include "sidewinder.h"
+
 #include "txbrand.h"
-
+
 grid *
 sidewinder_on(grid *grid) {
 	ASSERT_GRID(grid, "sidewinder_on not a grid");

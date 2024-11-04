@@ -1,4 +1,4 @@
-/* needlibs.c -- collect all implementations in one place instead of trying to
+/* genlibs.c -- collect all implementations in one place instead of trying to
  * figure out where best to put them. */
 
 #define TXBMISC_IMPLEMENTATION
@@ -10,4 +10,4 @@
 #define TXBRAND_IMPLEMENTATION
 #include "txbrand.h"
 
-/* needlibs.c ends here */
+/* genlibs.c ends here */

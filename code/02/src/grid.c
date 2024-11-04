@@ -6,7 +6,7 @@
 #include "cell.h"
 #include "grid.h"
 
-#include "txbabort_if.h"
+#include "txbabort.h"
 #include "txbsb.h"
 #include "txbrand.h"
 
@@ -51,10 +51,9 @@ grid_create(
 	memset(self->cells, 0, self->num_cells *sizeof(cell *));
 
 	/* create all the cells */
-	for (int row = 0; row < self->rows; row++) {
+	for (int row = 0; row < self->rows; row++)
 		for (int col = 0; col < self->cols; col++)
 			self->cells[index_of_cell(self, row, col)] = cell_create(row, col);
-	}
 
 	/* assign neighbors. grid_cell_at will return a null for an
 	 * off grid row,col, simplifying the loop. */
@@ -94,18 +93,18 @@ grid_destroy(
  * a string representation of a grid, printable.
  */
 
-const char *
+char *
 grid_to_string(
 	grid *self
 ) {
-	sbcb *sb = sb_create_string("+");
+	hsb *sb = sb_create_string("+");
 	for (int col = 0; col < self->cols; col++)
 		sb_puts(sb, "---+");
 	sb_putc(sb, '\n');
 
 	for (int row = 0; row < self->rows; row++) {
-		sbcb *top = sb_create_string("|");
-		sbcb *bottom = sb_create_string("+");
+		hsb *top = sb_create_string("|");
+		hsb *bottom = sb_create_string("+");
 		for (int col = 0; col < self->cols; col++) {
 			cell *curr = grid_cell_at(self, row, col);
 			char *east_boundary = cell_linked_p(curr, curr->east) ? "    " : "   |";
@@ -122,7 +121,7 @@ grid_to_string(
 		sb_destroy(bottom);
 	}
 
-	const char *res = sb_to_string(sb);
+	char *res = sb_to_string(sb);
 	sb_destroy(sb);
 	return res;
 }
